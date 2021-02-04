@@ -1,0 +1,72 @@
+[
+    {
+        "method": "GET",
+        "path": "/stream",
+        "controller": "StreamingController"
+    },
+    {
+        "method": "GET",
+        "path": "/streams",
+        "controller": "StreamingController",
+        "exec": "getAll"
+    },
+    {
+        "method": "GET",
+        "path": "/streamKey",
+        "controller": "StreamingController",
+        "exec": "getStreamKey",
+        "middleware": "ensureAuthenticated"
+    },
+    {
+        "method": "GET",
+        "path": "/generateStreamKey",
+        "controller": "StreamingController",
+        "exec": "generateStreamKey",
+        "middleware": "ensureAuthenticated"
+    },
+    {
+        "method": "POST",
+        "path": "/createStream",
+        "controller": "StreamingController",
+        "exec": "create",
+        "middleware": "ensureAuthenticated"
+    },
+    {
+        "method": "GET",
+        "path": "/users",
+        "controller": "UserController",
+        "middleware": "ensureAuthenticated"
+    },
+    {
+        "method": "GET",
+        "path": "/user",
+        "controller": "UserController",
+        "exec": "getOne",
+        "middleware": "ensureAuthenticated"
+    },
+    {
+        "method": "POST",
+        "path": "/login",
+        "controller": "UserController",
+        "exec": "login"
+    },
+    {
+        "method": "POST",
+        "path": "/logout",
+        "controller": "UserController",
+        "exec": "logout"
+    },
+    {
+        "method": "POST",
+        "path": "/register",
+        "controller": "UserController",
+        "exec": "register"
+    },
+    {
+        "method": "POST",
+        "path": "/isAuth",
+        "controller": "UserController",
+        "exec": "isAuth",
+        "middleware": "ensureAuthenticated"
+    }
+]

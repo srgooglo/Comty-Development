@@ -8,24 +8,63 @@
   },
   "files": [
     "dist",
-    "src"
+    "load.module.js"
   ],
-  "scripts": {
-    "start": "nodemon --inspect --exec babel-node ./src"
-  },
   "license": "MIT",
+  "nodemonConfig": {
+    "events": {
+      "restart": "kill-port 3000",
+      "crash": "kill-port 3000"
+    },
+    "delay": "1500",
+    "execMap": {
+      "ts": "node --require ts-node/register"
+    }
+  },
+  "scripts": {
+    "start": "nodemon --exec babel-node ./src"
+  },
   "dependencies": {
-    "@babel/node": "^7.12.10",
-    "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
-    "@babel/plugin-proposal-optional-chaining": "^7.12.7",
-    "@babel/plugin-proposal-private-methods": "^7.12.1",
-    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.12.10",
-    "@babel/runtime": "^7.12.5",
-    "@nodecorejs/cloudlink": "^0.16.23",
+    "@babel/runtime": "^7.12.1",
+    "@nodecorejs/dot-runtime": "^0.16.23",
     "@nodecorejs/utils": "^0.16.23",
-    "babel-node": "^0.0.1-security",
-    "nodemon": "^2.0.7"
+    "@types/express": "^4.17.8",
+    "@types/lodash": "^4.14.162",
+    "@types/node": "^14.11.2",
+    "bcrypt": "^5.0.0",
+    "connect-mongo": "^3.2.0",
+    "cors": "^2.8.5",
+    "cryptr": "^6.0.2",
+    "dotenv": "^8.2.0",
+    "execa": "^5.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "form-data": "^3.0.0",
+    "formdata-node": "^2.4.0",
+    "http-status": "^1.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "kill-port": "^1.6.1",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.10.11",
+    "node-fetch": "^2.6.1",
+    "node-media-server": "^2.2.4",
+    "nodemon": "^2.0.7",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "path-to-regexp": "^6.2.0",
+    "unique-names-generator": "^4.3.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.0",
+    "@babel/node": "^7.12.1",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.0",
+    "@babel/plugin-proposal-private-methods": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.1"
   }
 }
