@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+/nodecore_modules
 /npm-debug.log*
 /yarn-error.log
 /yarn.lock
@@ -8,6 +9,8 @@
 /build
 /dist
 /out
+/docs
+/logs_dump.log
 
 # umi
 /packages/**/src/.umi
