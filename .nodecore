@@ -1,7 +1,7 @@
 {
     "version": "0.12.8",
     "devRuntime": {
-        "headPackage": "ragestudio"
+        "headPackage": "comty"
     },
     "runtime": {
         "src": "/src",

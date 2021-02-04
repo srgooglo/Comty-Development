@@ -7,11 +7,10 @@
     "build": "umi build"
   },
   "dependencies": {
-    "@nodecorejs/utils": "^0.14.7",
-    "@ragestudio/nodecorejs": "^0.14.7",
+    "@nodecorejs/utils": "^0.16.23",
     "@umijs/preset-react": "^1.7.9",
     "antd": "^4.7.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "feather-reactjs": "^2.0.13",
     "hosted-git-info": "^3.0.5",

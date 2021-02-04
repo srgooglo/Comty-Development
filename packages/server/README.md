@@ -1,1 +1,1 @@
-# @ragestudio/server
+# @comty/server

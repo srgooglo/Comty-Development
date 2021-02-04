@@ -1,1 +1,1 @@
-# @undefined/comty-electron
+# @comty/comty-electron
