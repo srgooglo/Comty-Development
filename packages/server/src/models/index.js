@@ -1,6 +1,11 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
+const RoleSchema = Schema({
+    name: String,
+    apply: Object
+})
+
 const UserSchema = Schema({
     username: { type: String, required: true },
     fullName: String,
@@ -12,7 +17,7 @@ const UserSchema = Schema({
 })
 
 const SessionSchema = Schema({
-    user_id: String, // Unique Session Identificator
+    user_id: String,
     token: String,
 })
 
@@ -35,6 +40,7 @@ const StreamingResolverSchema = Schema({
     user_id: String,
 })
 
+export const Role = mongoose.model('Role', RoleSchema, 'roles')
 export const StreamingResolver = mongoose.model('StreamingResolver', StreamingResolverSchema, "streaming_resolvers")
 export const StreamKey = mongoose.model('StreamKey', StreamKeysSchema, "stream_keys")
 export const Streaming = mongoose.model('Streaming', StreamingSchema, "streamings")

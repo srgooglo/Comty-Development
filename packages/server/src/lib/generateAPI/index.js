@@ -5,6 +5,15 @@ import path from 'path'
 const router = express.Router()
 
 export default ({ MiddlewaresPath, ControllersPath }) => {
+    function getDefaultModule(type, name) {
+        const typesToPath = {
+            middleware: MiddlewaresPath,
+            controller: ControllersPath
+        }
+        const modulePath = typesToPath[type]
+        return require(path.resolve(modulePath, `./${name}/index.js`)).default
+    }
+
     try {
         if (typeof (APIS) !== "object") {
             console.error("INVALID APIS!!!")
@@ -16,25 +25,35 @@ export default ({ MiddlewaresPath, ControllersPath }) => {
                     console.log(`[INIT ERROR] Path is required!`)
                     return false
                 }
-    
+
                 let model = [api.path]
-    
-                let thisMiddleware = api.middleware ? require(path.resolve(MiddlewaresPath, `./${api.middleware}/index.js`)).default : null
-                let thisController = api.controller ? require(path.resolve(ControllersPath, `./${api.controller}/index.js`)).default : null
-    
-                if (typeof (api.exec) !== "undefined") {
-                    thisController = thisController[api.exec]
-                } else {
-                    thisController = thisController.get
+
+                let middlewares = []
+                let controller = api.controller ? getDefaultModule("controller", api.controller) : null
+
+                if (typeof (api.middleware) !== "undefined") {
+                    if (Array.isArray(api.middleware)) {
+                        api.middleware.forEach((middleware) => {
+                            middlewares.push(getDefaultModule("middleware", middleware))
+                        })
+                    } else {
+                        middlewares.push(getDefaultModule("middleware", api.middleware))
+                    }
+
+                    model.push(middlewares)
                 }
-    
-                if (thisMiddleware) {
-                    model.push(thisMiddleware)
+
+                if (typeof (api.controller) !== "undefined") {
+                    if (typeof (api.exec) !== "undefined") {
+                        controller = controller[api.exec]
+                    } else {
+                        controller = controller.get
+                    }
+
+                    model.push(controller)
                 }
-                if (thisController) {
-                    model.push(thisController)
-                }
-    
+
+
                 router[api.method.toLowerCase() ?? "get"](...model)
             } catch (error) {
                 console.log(`🚫 Error loading API ${api.path} > \n`)

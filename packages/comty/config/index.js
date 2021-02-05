@@ -1,34 +1,53 @@
+const packagejson = require("../package.json")
+
 module.exports = {
+  logo: {
+    alt: "https://dl.ragestudio.net/branding/comty/alt/index.svg"
+  },
+  
   app: {
-    guid: "7d6b74b5-1b3b-432f-97df-2c5fc2c2b6ae",
+    title: packagejson.name,
     siteName: 'Comty™',
     copyright: 'RageStudio©',
-    MainPath: '/',
+
+    dva_app_model: "app",
+    mainPath: '/main',
+
     defaultStyleClass: "app_",
+    defaultTransitionPreset: "moveToLeftFromRight",
 
-    LogoPath: '/logo.svg',
-    FullLogoPath: '/full_logo.svg',
-    DarkFullLogoPath: '/dark_full_logo.svg',
-    DarkLogoPath: '/dark_logo.svg',
-
-    endpoint_v3prefix: 'ycorejs_apiv3',
-    endpoint_websocket: 'eu_es01.ragestudio.net',
-
-    storage: {
-      theme: "app_theme",
-      settings: "app_settings",
-      token: "cid",
-      data: "data"
+    storage: { // specify where data is storaged
+      session_frame: "session",
+      signkey: "certified",
+      settings: "settings",
+      theme: "theme"
     },
 
-    storage_authFrame: 'cid',
-    storage_dataFrame: 'data',
-    storage_theme: 'app_theme',
-
-    appTheme_desiredContrast: 7,
-    // Contrast level AA = 4.5, Level AAA = 7
-    // Reference: https://www.w3.org/WAI/WCAG21/quickref/?versions=2.0&showtechniques=143#qr-visual-audio-contrast-contrast
+    guid: "7d6b74b5-1b3b-432f-97df-2c5fc2c2b6ae",
+    certified_signkeys: [
+      "f706b0a535b6c2d36545c4137a0a3a26853ea8b5-1223c9ba7923152cae28e5a2e7501b2b-50600768"
+    ],
+    api_hostname: "https://api.comty.pw",
   },
+
+  queryIndexer: [
+    {
+      match: '/s;:id',
+      to: `/settings?key=:id`,
+    },
+    {
+      match: '/h;:id',
+      to: `/hashtag?key=:id`,
+    },
+    {
+      match: '/post/:id',
+      to: `/post?key=:id`,
+    },
+    {
+      match: '/@:id',
+      to: `/@/:id`,
+    }
+  ],
 
   i18n: {
     languages: [
@@ -52,7 +71,6 @@ module.exports = {
     }
   ],
 
-  // Default Behaviors 
   defaults: {
     app_model: "app",
     verbosity: false,
@@ -75,8 +93,7 @@ module.exports = {
 
   stricts: {
     post_maxlenght: '512',
-    // In KB
-    api_maxpayload: '101376',
+    api_maxpayload: '101376', // In KB
     api_maxovertick: 10,
   }
 }

@@ -2,7 +2,7 @@ import { ui } from 'core/libs'
 import { verbosity } from '@nodecorejs/utils'
 import errStrings from 'config/handlers/errToStrings.js'
 import errNumbers from 'config/handlers/numToError.js'
-import errFlags from  'config/handlers/errToFlag.js'
+import errFlags from 'config/handlers/errToFlag.js'
 import flagToBehavior from 'config/handlers/flagToBehavior.js'
 
 const flagToString = {
@@ -16,16 +16,16 @@ export function notifyErrorHandler(params) {
         return false
     }
     ui.notify.open({
-      message: flagToString[params.flag] ?? "Unexpected Error",
-      description:
-      <div style={{ display: 'flex', flexDirection: 'column', margin: 'auto', height: "auto" }}>
-          <div style={{ margin: '10px 0' }}> {params.msg ?? "No exception message"} </div>
-          <div> {errStrings[params.out] ?? "Unhandled Exception"} | { params.out?? "UNDEFINED_KEY" } </div>
-      </div>,
+        message: flagToString[params.flag] ?? "Unexpected Error",
+        description:
+            <div style={{ display: 'flex', flexDirection: 'column', margin: 'auto', height: "auto" }}>
+                <div style={{ margin: '10px 0' }}> {params.msg ?? "No exception message"} </div>
+                <div> {errStrings[params.out] ?? "Unhandled Exception"} | {params.out ?? "UNDEFINED_KEY"} </div>
+            </div>,
     })
 }
 
-export function ErrorHandler(payload, callback){
+export function ErrorHandler(payload, callback) {
     if (!payload) {
         return false
     }
@@ -35,20 +35,20 @@ export function ErrorHandler(payload, callback){
     let out = null
 
     const { msg, outFlag, code } = payload
-    
+
     if (!out && code != null) { // This give priority to resolve with `code` than `outFlag` 
         out = errNumbers[code]
     }
 
-    if (!out && outFlag != null ) {
+    if (!out && outFlag != null) {
         out = outFlag
     }
 
-    verbosity.log(msg?? "unhandled message", {type: "error"})
+    verbosity.log(msg ?? "unhandled message", { type: "error" })
 
-    if (out && typeof(errStrings[out]) !== "undefined") {
+    if (out && typeof (errStrings[out]) !== "undefined") {
         flag = errFlags[out]
-    }else{
+    } else {
         console.log("(Aborted) no out key | or invalid flag => ", out)
         return false
     }
@@ -66,7 +66,7 @@ export function ErrorHandler(payload, callback){
             return false
         default:
             console.log('Invalid FLAG')
-            break;
+            break
     }
 }
 

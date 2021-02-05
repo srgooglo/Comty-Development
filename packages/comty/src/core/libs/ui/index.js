@@ -1,1 +1,1 @@
-export * from './notify'
+export { Default as Notify } from './notify'

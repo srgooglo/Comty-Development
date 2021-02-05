@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+import socketIO from 'socket.io'
 import { verbosity, objectToArrayMap } from '@nodecorejs/utils'
 import express from 'express'
 import bcrypt from 'bcrypt'

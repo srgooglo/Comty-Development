@@ -1,15 +1,17 @@
-const zeroStyles = (element: HTMLElement, ...properties: string[]): void => {
+const zeroStyles = (element, ...properties) => {
   for (const property of properties) {
     element.style.setProperty(property, '0')
   }
 }
 
-const removeElement = (element: HTMLElement): void => {
-  element.parentNode!.removeChild(element)
+const removeElement = (element) => {
+  if (element.parentNode != null) {
+    element.parentNode.removeChild(element)
+  }
 }
 
-const createTextArea = (): HTMLTextAreaElement => {
-  const textArea: HTMLTextAreaElement = document.createElement('textarea')
+const createTextArea = () => {
+  const textArea = document.createElement('textarea')
   textArea.setAttribute('cols', '0')
   textArea.setAttribute('rows', '0')
   zeroStyles(textArea,
@@ -32,36 +34,36 @@ const createTextArea = (): HTMLTextAreaElement => {
   textArea.style.setProperty('position', 'absolute')
   textArea.style.setProperty('width', '1px')
   document.body.appendChild(textArea)
-  return textArea;
+  return textArea
 }
 
 export const clipboard = {
-  copyText: (data:String) => {
+  copyText: (data) => {
     if (typeof (data) !== "string") {
       return false
     }
-    const textArea: HTMLTextAreaElement = createTextArea()
+    const textArea= createTextArea()
     textArea.value = data
     textArea.select()
-    const success: boolean = document.execCommand('copy')
+    const success = document.execCommand('copy')
     removeElement(textArea)
     if (!success) {
       return false
     }
   },
-  readText: (data:String) => {
+  readText: (data) => {
     if (typeof (data) !== "string") {
       return false
     }
-    const textArea: HTMLTextAreaElement = createTextArea()
+    const textArea= createTextArea()
     textArea.focus()
-    const success: boolean = document.execCommand('paste')
+    const success = document.execCommand('paste')
 
     if (!success) {
       removeElement(textArea)
       return false
     }
-    const value: string = textArea.value
+    const value = textArea.value
     removeElement(textArea)
     return value
   }
