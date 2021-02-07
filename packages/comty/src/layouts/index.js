@@ -1,7 +1,6 @@
 import React from 'react'
 import BaseLayout from './BaseLayout'
 import { withRouter } from 'umi'
-
 @withRouter
 class Layout extends React.Component {
   componentDidMount(){

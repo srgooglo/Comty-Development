@@ -1,7 +1,7 @@
 import store from 'store'
 import config, { defaults } from 'config'
 import { queryIndexer, setLocale } from 'core'
-import * as ui from 'core/libs/ui'
+import { ui } from 'core/libs'
 import { history } from 'umi'
 import { objectToArrayMap, verbosity } from '@nodecorejs/utils'
 
@@ -24,7 +24,7 @@ export default {
 
     session_valid: false,
     session_token: null,
-    session: {},
+    session: false,
 
     account_data: [],
     notifications: [],
@@ -102,25 +102,18 @@ export default {
 
     },
     *query({ payload }, { call, put, select }) {
-      const state = yield select(state => state.app)
+      const state = yield select(states => states.app)
 
       if (state.session) {
         let updated = {}
-
-        const tryDefault = (key) => {
-          if (typeof (defaults[key]) !== "undefined") {
-            return defaults[key]
-          }
-          return null
-        }
-        const fromSessionFrame = ["username", "sub", "iat", "fullName", "avatar", "email"]
+      
+        const fromSessionFrame = ["username", "sub", "iat", "fullName", "avatar", "email", "roles"]
 
         fromSessionFrame.forEach((e) => {
           try {
-            if (state.session[e] != null) { // if false try to catch from defaults in config
+            if (state.session[e] != null) {
               return updated[e] = state.session[e]
             }
-            return updated[e] = tryDefault(e)
           } catch (error) {
             return console.log(error)
           }
@@ -139,16 +132,31 @@ export default {
         if (isPathname("login")) {
           return history.push(config.app?.mainPath ?? "/")
         }
-        state.dispatcher({ type: "closeSplash" })
       } else {
         history.push(`/login`)
       }
+      
+      state.dispatcher({ type: "closeSplash" })
+
     },
     *closeSplash({ }, { select }) {
       const state = yield select(state => state.app)
-      state.dispatcher({ type: "updateState", payload: { queryDone: true, splash: { render: true, fadeout: state.fadeclock } } })
+
+      state.dispatcher({
+        type: "updateState",
+        payload: {
+          queryDone: true,
+          splash: { render: true, fadeout: state.fadeclock }
+        }
+      })
+
       setTimeout(() => {
-        state.dispatcher({ type: "updateState", payload: { splash: { render: false, fadeout: false } } })
+        state.dispatcher({
+          type: "updateState",
+          payload: {
+            splash: { render: false, fadeout: false }
+          }
+        })
       }, state.fadeclock)
     },
     *initFrames({ payload }, { select }) {
@@ -159,7 +167,7 @@ export default {
 
       if (session) {
         try {
-          if (config.app.certified_signkeys.includes(signkey)) {
+          if (config.app.certified_signkeys?.includes(signkey)) {
             jwt.verify(session, signkey, (err, decoded) => {
               if (err) {
                 verbosity.log([`Invalid token > `, err])
@@ -252,24 +260,7 @@ export default {
   },
   reducers: {
     updateState(state, { payload }) {
-      return {
-        ...state,
-        ...payload,
-      }
-    },
-    ipcInvoke(state, { payload }) {
-      if (!payload || !state.embedded) {
-        return false
-      }
-      const ipc = state.electron.ipcRenderer
-      ipc.invoke(payload.key, payload.payload)
-    },
-    ipcSend(state, { payload }) {
-      if (!payload || !state.embedded) {
-        return false
-      }
-      const ipc = state.electron.ipcRenderer
-      ipc.send(payload.key, payload.payload)
+      return { ...state, ...payload }
     },
     destroySession(state) {
       state.session = false

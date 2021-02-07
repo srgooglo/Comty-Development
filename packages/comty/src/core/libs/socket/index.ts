@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 import { verbosity } from '@nodecorejs/utils'
 import settings from 'core/libs/settings'
-import { notify } from 'core/libs/ui'
+import { ui } from 'core/libs'
 
 const stateCodes = {
     0: "closed",
@@ -224,7 +224,7 @@ export default class SocketConnection {
 
         this.ioConn.on('disconnect', (event: ioConnTypes) => {
             if (this.opts.isHeader) {
-                notify.warn("You are offline")
+                ui.notify.warn("You are offline")
             }
             verbosity.log(`🔌 Disconnect from socket (${this.opts.namespaceOrigin}) > [socket_event] >`, event)
             this.ioConn.updateConnectionState(3)

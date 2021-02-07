@@ -185,7 +185,7 @@ export default class PostCard extends React.PureComponent {
   renderMoreMenu() {
     return moreMenuList.map((e) => {
       return (<antd.Menu.Item onClick={() => this.handleMenuClick(e.id)} key={e.id ?? ""}>
-        {React.createElement(Icons[e.icon])}{e.textDisable && e.textEnable? (this.getMenuValue(e.id) ? e.textEnable : e.textDisable) : e.title?? e.text ?? "Who knows"}
+        {React.createElement(Icons[e.icon])}{e.textDisable && e.textEnable ? (this.getMenuValue(e.id) ? e.textEnable : e.textDisable) : e.title ?? e.text ?? "Who knows"}
       </antd.Menu.Item>)
     })
   }

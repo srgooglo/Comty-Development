@@ -15,7 +15,7 @@ export function notifyErrorHandler(params) {
     if (!params) {
         return false
     }
-    ui.notify.open({
+    ui.Notify.open({
         message: flagToString[params.flag] ?? "Unexpected Error",
         description:
             <div style={{ display: 'flex', flexDirection: 'column', margin: 'auto', height: "auto" }}>

@@ -1,12 +1,12 @@
-import { app } from 'config'
+import config from 'config'
 import axios from 'axios'
-import * as ui from 'core/libs/ui'
+import { ui } from 'core/libs'
 import { objectToArrayMap, verbosity } from '@nodecorejs/utils'
 
 export default {
     namespace: 'api',
     state: {
-        api_hostname: app.api_hostname
+        api_hostname: config.app.api_hostname
     },
     effects: {
         *request({ payload, callback }, { put, call, select }) {

@@ -63,7 +63,7 @@ class Login extends React.Component {
 
   componentDidMount() {
     if (this.props.app.session_valid) {
-      ui.notify.info('You have already logged into an account, you can change your account by logging in again')
+      ui.Notify.info('You have already logged into an account, you can change your account by logging in again')
     }
   }
 

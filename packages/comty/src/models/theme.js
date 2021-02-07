@@ -14,6 +14,8 @@ export default {
     },
     effects: {
         *init({ payload }, { select, put }) {
+            const state = yield select(states => states.theme)
+
             window.classToStyle = (key) => {
                 if (typeof (key) !== "string") {
                     try {
@@ -35,7 +37,8 @@ export default {
         },
         *updateTheme({ payload }, { put, select }) {
             if (!payload) return false
-            let container = yield select(state => state.app.app_theme)
+            let container = yield select(states => states.theme.current)
+            
             let style_keys = []
             let tmp = []
 
