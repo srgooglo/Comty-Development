@@ -3,29 +3,11 @@ import { format } from 'timeago.js'
 import { cloneDeep } from 'lodash'
 import store from 'store'
 import html2canvas from 'html2canvas'
-import platform from 'platform'
-
-import config from 'config'
-import handle from 'core/libs/errorhandler'
-
-import { objectToArrayMap } from '@nodecorejs/utils'
-import { ui } from 'core/libs'
 
 const { pathToRegexp } = require('path-to-regexp')
-
-export const package_json = require('../../package.json')
+export const config = require('config')
+export const packageJson = require('../../package.json')
 export const GUID = config.app.guid
-
-export const clientInfo = {
-  packageName: package_json.name,
-  packageStage: package_json.stage,
-  siteName: config.app.siteName,
-  version: package_json.version,
-  logo: config.app.FullLogoPath,
-  logo_dark: config.app.DarkFullLogoPath,
-  os: platform.os,
-  layout: platform.layout
-}
 
 export function queryIndexer(array, callback, params) {
   if (!array) return false
